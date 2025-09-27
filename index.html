@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Date Format Converter</title>
+    <title>Date & Number Converter Tool</title>
     <style>
         * {
             margin: 0;
@@ -44,6 +44,42 @@
             margin-bottom: 30px;
             font-size: 1.1em;
             line-height: 1.5;
+        }
+
+        .tab-nav {
+            display: flex;
+            margin-bottom: 30px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .input-group {
@@ -97,6 +133,42 @@
             transform: translateY(0);
         }
 
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .calc-btn {
+            background: #f8f9ff;
+            border: 2px solid #e8ecff;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #667eea;
+        }
+
+        .calc-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .calc-btn.clear {
+            background: #fee;
+            border-color: #fcc;
+            color: #e74c3c;
+        }
+
+        .calc-btn.clear:hover {
+            background: #e74c3c;
+            color: white;
+        }
+
         .result {
             margin-top: 25px;
             padding: 20px;
@@ -146,6 +218,7 @@
             margin-bottom: 20px;
             font-size: 14px;
             color: #0066cc;
+            text-align: left;
         }
 
         .format-info {
@@ -156,6 +229,7 @@
             margin-top: 20px;
             font-size: 14px;
             color: #856404;
+            text-align: left;
         }
 
         @media (max-width: 480px) {
@@ -166,48 +240,122 @@
             h1 {
                 font-size: 1.8em;
             }
+
+            .calc-buttons {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📅 Date Format Converter</h1>
-        <p class="subtitle">Convert dates from multiple formats to YYYY-MM-DDTHH:MM:SS format</p>
-        
-        <div class="example">
-            <strong>Examples:</strong><br>
-            • "6/13/2025" → "2025-06-13T00:00:00"<br>
-            • "Aug 05, 2025" → "2025-08-05T00:00:00"<br>
-            • "Sep 05, 2025 2:15" → "2025-09-05T02:15:00"
+        <h1>🛠️ Date & Number Converter Tool</h1>
+        <p class="subtitle">Convert dates to standard format and perform number calculations</p>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="showTab('date')">📅 Date Converter</button>
+            <button class="tab-btn" onclick="showTab('calculator')">🧮 Number Calculator</button>
         </div>
 
-        <div class="input-group">
-            <label for="dateInput">Enter Date (Multiple formats supported):</label>
-            <input type="text" id="dateInput" placeholder="e.g., 6/13/2025 or Aug 05, 2025 or Sep 05, 2025 2:15" autocomplete="off">
+        <!-- Date Converter Tab -->
+        <div id="dateTab" class="tab-content">
+            <div class="example">
+                <strong>Examples:</strong><br>
+                • "6/13/2025" → "2025-06-13T00:00:00"<br>
+                • "Aug 05, 2025" → "2025-08-05T00:00:00"<br>
+                • "Sep 05, 2025 2:15" → "2025-09-05T02:15:00"<br>
+                • "2025-07-07 5:30" → "2025-07-07T05:30:00"<br>
+                • "2025-07-07 t5:30" → "2025-07-07T05:30:00"
+            </div>
+
+            <div class="input-group">
+                <label for="dateInput">Enter Date (Multiple formats supported):</label>
+                <input type="text" id="dateInput" placeholder="e.g., 6/13/2025 or Aug 05, 2025 or 2025-07-07 5:30" autocomplete="off">
+            </div>
+
+            <button class="convert-btn" onclick="convertDate()">Convert Date</button>
+
+            <div class="result" id="dateResult">
+                <span style="color: #999;">Converted date will appear here</span>
+            </div>
+
+            <div class="format-info">
+                <strong>Supported Input Formats:</strong><br>
+                • MM/DD/YYYY (e.g., 6/13/2025)<br>
+                • Month DD, YYYY (e.g., Aug 05, 2025)<br>
+                • Month DD, YYYY H:MM (e.g., Sep 05, 2025 2:15)<br>
+                • YYYY-MM-DD H:MM (e.g., 2025-07-07 5:30)<br>
+                • YYYY-MM-DD tH:MM (e.g., 2025-07-07 t5:30)<br>
+                <strong>Output Format:</strong> YYYY-MM-DDTHH:MM:SS (ISO 8601 format)
+            </div>
         </div>
 
-        <button class="convert-btn" onclick="convertDate()">Convert Date</button>
+        <!-- Calculator Tab -->
+        <div id="calculatorTab" class="tab-content" style="display: none;">
+            <div class="example">
+                <strong>Examples:</strong><br>
+                • "$234,80 + 100" → "334.80"<br>
+                • "234.50 * 2" → "469.00"<br>
+                • "345 - 45.25" → "299.75"
+            </div>
 
-        <div class="result" id="result">
-            <span style="color: #999;">Converted date will appear here</span>
-        </div>
+            <div class="input-group">
+                <label for="calcInput">Enter Numbers and Operation:</label>
+                <input type="text" id="calcInput" placeholder="e.g., $234,80 + 100 or 234.50 * 2" autocomplete="off">
+            </div>
 
-        <div class="format-info">
-            <strong>Supported Input Formats:</strong><br>
-            • MM/DD/YYYY (e.g., 6/13/2025, 12/31/2024)<br>
-            • Month DD, YYYY (e.g., Aug 05, 2025, December 25, 2024)<br>
-            • Month DD, YYYY H:MM (e.g., Sep 05, 2025 2:15, Jan 01, 2024 14:30)<br>
-            <strong>Output Format:</strong> YYYY-MM-DDTHH:MM:SS (ISO 8601 format)
+            <div class="calc-buttons">
+                <button class="calc-btn" onclick="addToCalc(' + ')">+</button>
+                <button class="calc-btn" onclick="addToCalc(' - ')">-</button>
+                <button class="calc-btn" onclick="addToCalc(' * ')">×</button>
+                <button class="calc-btn" onclick="addToCalc(' / ')">÷</button>
+                <button class="calc-btn clear" onclick="clearCalc()">Clear</button>
+            </div>
+
+            <button class="convert-btn" onclick="calculateNumbers()">Calculate</button>
+
+            <div class="result" id="calcResult">
+                <span style="color: #999;">Calculation result will appear here</span>
+            </div>
+
+            <div class="format-info">
+                <strong>Supported Number Formats:</strong><br>
+                • Regular numbers (e.g., 234, 45.67)<br>
+                • Currency with $ (e.g., $234.50, $1,234.80)<br>
+                • European format with comma as decimal (e.g., 234,80)<br>
+                • Numbers with thousand separators (e.g., 1,234.50)<br>
+                <strong>Operations:</strong> + (add), - (subtract), * (multiply), / (divide)
+            </div>
         </div>
     </div>
 
     <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.getElementById('dateTab').style.display = 'none';
+            document.getElementById('calculatorTab').style.display = 'none';
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab and mark button as active
+            if (tabName === 'date') {
+                document.getElementById('dateTab').style.display = 'block';
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            } else {
+                document.getElementById('calculatorTab').style.display = 'block';
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            }
+        }
+
+        // Date conversion functions
         function convertDate() {
             const input = document.getElementById('dateInput').value.trim();
-            const resultDiv = document.getElementById('result');
             
             if (!input) {
-                showError('Please enter a date');
+                showError('Please enter a date', 'dateResult');
                 return;
             }
 
@@ -220,14 +368,22 @@
             if (mmddyyyyMatch) {
                 result = parseMMDDYYYY(mmddyyyyMatch);
             } else {
-                // Try Month DD, YYYY format with optional time
-                result = parseMonthFormat(input);
+                // Try YYYY-MM-DD format with optional time
+                const yyyymmddPattern = /^(\d{4})-(\d{1,2})-(\d{1,2})(?:\s+t?(\d{1,2}):(\d{2}))?$/i;
+                const yyyymmddMatch = input.match(yyyymmddPattern);
+                
+                if (yyyymmddMatch) {
+                    result = parseYYYYMMDD(yyyymmddMatch);
+                } else {
+                    // Try Month DD, YYYY format with optional time
+                    result = parseMonthFormat(input);
+                }
             }
             
             if (result.error) {
-                showError(result.error);
+                showError(result.error, 'dateResult');
             } else {
-                showResult(result.formatted);
+                showResult(result.formatted, 'dateResult');
             }
         }
 
@@ -262,6 +418,51 @@
             return { formatted };
         }
 
+        function parseYYYYMMDD(match) {
+            const year = parseInt(match[1]);
+            const month = parseInt(match[2]);
+            const day = parseInt(match[3]);
+            const hour = match[4] ? parseInt(match[4]) : 0;
+            const minute = match[5] ? parseInt(match[5]) : 0;
+
+            // Validate date components
+            if (month < 1 || month > 12) {
+                return { error: 'Month must be between 1 and 12' };
+            }
+
+            if (day < 1 || day > 31) {
+                return { error: 'Day must be between 1 and 31' };
+            }
+
+            if (hour < 0 || hour > 23) {
+                return { error: 'Hour must be between 0 and 23' };
+            }
+
+            if (minute < 0 || minute > 59) {
+                return { error: 'Minute must be between 0 and 59' };
+            }
+
+            // Create date object to validate the date
+            const date = new Date(year, month - 1, day, hour, minute);
+            
+            if (date.getFullYear() !== year || 
+                date.getMonth() !== month - 1 || 
+                date.getDate() !== day ||
+                date.getHours() !== hour ||
+                date.getMinutes() !== minute) {
+                return { error: 'Invalid date. Please check the date and time values.' };
+            }
+
+            // Format the output as YYYY-MM-DDTHH:MM:SS
+            const formattedMonth = month.toString().padStart(2, '0');
+            const formattedDay = day.toString().padStart(2, '0');
+            const formattedHour = hour.toString().padStart(2, '0');
+            const formattedMinute = minute.toString().padStart(2, '0');
+            const formatted = `${year}-${formattedMonth}-${formattedDay}T${formattedHour}:${formattedMinute}:00`;
+
+            return { formatted };
+        }
+
         function parseMonthFormat(input) {
             const monthNames = {
                 'jan': 1, 'january': 1,
@@ -283,7 +484,7 @@
             const match = input.match(monthPattern);
             
             if (!match) {
-                return { error: 'Invalid format. Supported formats: MM/DD/YYYY, Month DD, YYYY, or Month DD, YYYY H:MM' };
+                return { error: 'Invalid format. Supported formats: MM/DD/YYYY, Month DD, YYYY H:MM, or YYYY-MM-DD H:MM' };
             }
 
             const monthName = match[1].toLowerCase();
@@ -333,8 +534,60 @@
             return { formatted };
         }
 
-        function showResult(result) {
-            const resultDiv = document.getElementById('result');
+        // Calculator functionality
+        function addToCalc(operator) {
+            const calcInput = document.getElementById('calcInput');
+            calcInput.value += operator;
+            calcInput.focus();
+        }
+
+        function clearCalc() {
+            document.getElementById('calcInput').value = '';
+            document.getElementById('calcResult').innerHTML = '<span style="color: #999;">Calculation result will appear here</span>';
+            document.getElementById('calcResult').className = 'result';
+        }
+
+        function calculateNumbers() {
+            const input = document.getElementById('calcInput').value.trim();
+            
+            if (!input) {
+                showError('Please enter a calculation', 'calcResult');
+                return;
+            }
+
+            try {
+                // Clean and parse the input
+                let cleanInput = input
+                    .replace(/\$/g, '') // Remove dollar signs
+                    .replace(/×/g, '*') // Replace × with *
+                    .replace(/÷/g, '/') // Replace ÷ with /
+                    .replace(/,(\d{2})(?!\d)/g, '.$1') // Convert European decimal comma to dot (234,80 -> 234.80)
+                    .replace(/,(?=\d{3})/g, ''); // Remove thousand separators (1,234 -> 1234)
+
+                // Validate that the expression contains only numbers and operators
+                if (!/^[\d\s+\-*/().]+$/.test(cleanInput)) {
+                    throw new Error('Invalid characters in calculation');
+                }
+
+                // Evaluate the expression safely
+                const result = Function('"use strict"; return (' + cleanInput + ')')();
+                
+                if (isNaN(result) || !isFinite(result)) {
+                    throw new Error('Invalid calculation result');
+                }
+
+                // Format the result to 2 decimal places
+                const formattedResult = parseFloat(result).toFixed(2);
+                showResult(formattedResult, 'calcResult');
+
+            } catch (error) {
+                showError('Invalid calculation. Please check your input.', 'calcResult');
+            }
+        }
+
+        // Utility functions
+        function showResult(result, elementId) {
+            const resultDiv = document.getElementById(elementId);
             resultDiv.className = 'result';
             resultDiv.innerHTML = `
                 <span class="result-text">${result}</span>
@@ -342,8 +595,8 @@
             `;
         }
 
-        function showError(message) {
-            const resultDiv = document.getElementById('result');
+        function showError(message, elementId) {
+            const resultDiv = document.getElementById(elementId);
             resultDiv.className = 'result error';
             resultDiv.innerHTML = `<span class="result-text">${message}</span>`;
         }
@@ -377,22 +630,31 @@
             });
         }
 
-        // Allow Enter key to trigger conversion
-        document.getElementById('dateInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                convertDate();
-            }
-        });
-
-        // Auto-convert as user types (with debounce)
-        let timeout;
-        document.getElementById('dateInput').addEventListener('input', function() {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                if (this.value.trim()) {
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Allow Enter key to trigger conversion for both tabs
+            document.getElementById('dateInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
                     convertDate();
                 }
-            }, 1000);
+            });
+
+            document.getElementById('calcInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    calculateNumbers();
+                }
+            });
+
+            // Auto-convert as user types (with debounce) for date input
+            let dateTimeout;
+            document.getElementById('dateInput').addEventListener('input', function() {
+                clearTimeout(dateTimeout);
+                dateTimeout = setTimeout(() => {
+                    if (this.value.trim()) {
+                        convertDate();
+                    }
+                }, 1000);
+            });
         });
     </script>
 </body>

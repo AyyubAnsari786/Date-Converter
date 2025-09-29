@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Date & Number Converter Tool</title>
+    <title>IndiVillage Converter Tool</title>
     <style>
         * {
             margin: 0;
@@ -15,10 +15,21 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 20px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .container {
@@ -27,22 +38,22 @@
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             padding: 40px;
-            max-width: 500px;
-            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
             text-align: center;
         }
 
         h1 {
             color: #333;
-            margin-bottom: 30px;
-            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-size: 2em;
             font-weight: 600;
         }
 
         .subtitle {
             color: #666;
             margin-bottom: 30px;
-            font-size: 1.1em;
+            font-size: 1em;
             line-height: 1.5;
         }
 
@@ -52,15 +63,16 @@
             background: #f0f0f0;
             border-radius: 10px;
             padding: 5px;
+            gap: 5px;
         }
 
         .tab-btn {
             flex: 1;
             background: transparent;
             border: none;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -83,7 +95,7 @@
         }
 
         .input-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
@@ -92,101 +104,114 @@
             margin-bottom: 8px;
             color: #555;
             font-weight: 500;
+            font-size: 14px;
         }
 
-        input[type="text"] {
+        input[type="text"], textarea {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 15px;
             transition: all 0.3s ease;
             background: white;
+            font-family: inherit;
         }
 
-        input[type="text"]:focus {
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        input[type="text"]:focus, textarea:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .convert-btn {
+        .action-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 16px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 100%;
-            margin-bottom: 25px;
+            margin: 5px;
         }
 
-        .convert-btn:hover {
+        .action-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
-        .convert-btn:active {
-            transform: translateY(0);
+        .action-btn.secondary {
+            background: #6c757d;
         }
 
-        .calc-buttons {
+        .action-btn.success {
+            background: #28a745;
+        }
+
+        .calc-buttons, .case-buttons {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
             margin-bottom: 20px;
         }
 
-        .calc-btn {
+        .calc-btn, .case-btn {
             background: #f8f9ff;
             border: 2px solid #e8ecff;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             color: #667eea;
         }
 
-        .calc-btn:hover {
+        .calc-btn:hover, .case-btn:hover {
             background: #667eea;
             color: white;
             transform: translateY(-2px);
         }
 
-        .calc-btn.clear {
+        .calc-btn.clear, .case-btn.clear {
             background: #fee;
             border-color: #fcc;
             color: #e74c3c;
         }
 
-        .calc-btn.clear:hover {
+        .calc-btn.clear:hover, .case-btn.clear:hover {
             background: #e74c3c;
             color: white;
         }
 
         .result {
-            margin-top: 25px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 15px;
             background: #f8f9ff;
             border-radius: 10px;
             border: 2px solid #e8ecff;
-            min-height: 60px;
+            min-height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .result-text {
             font-family: 'Courier New', monospace;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: #333;
             word-break: break-all;
+            flex: 1;
         }
 
         .error {
@@ -195,15 +220,14 @@
             border-color: #fecaca;
         }
 
-        .copy-btn {
+        .copy-btn, .download-btn {
             background: #28a745;
             color: white;
             border: none;
             padding: 8px 16px;
             border-radius: 5px;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
-            margin-left: 10px;
             transition: all 0.3s ease;
         }
 
@@ -211,12 +235,20 @@
             background: #218838;
         }
 
+        .download-btn {
+            background: #17a2b8;
+        }
+
+        .download-btn:hover {
+            background: #138496;
+        }
+
         .example {
             background: #e8f4fd;
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
+            margin-bottom: 15px;
+            font-size: 13px;
             color: #0066cc;
             text-align: left;
         }
@@ -225,84 +257,130 @@
             background: #fff3cd;
             border: 1px solid #ffeaa7;
             border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-            font-size: 14px;
+            padding: 12px;
+            margin-top: 15px;
+            font-size: 13px;
             color: #856404;
             text-align: left;
         }
 
-        @media (max-width: 480px) {
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
             .container {
-                padding: 30px 20px;
+                padding: 25px 20px;
             }
             
             h1 {
-                font-size: 1.8em;
+                font-size: 1.5em;
             }
 
-            .calc-buttons {
-                grid-template-columns: repeat(3, 1fr);
+            .tab-btn {
+                font-size: 11px;
+                padding: 8px;
+            }
+
+            .calc-buttons, .case-buttons {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🛠️ Date & Number Converter Tool</h1>
-        <p class="subtitle">Convert dates to standard format and perform number calculations</p>
+    <div class="logo-container">
+        <svg width="200" height="60" xmlns="http://www.w3.org/2000/svg">
+            <text x="10" y="45" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#000">indivillage</text>
+        </svg>
+    </div>
 
-        <!-- Tab Navigation -->
+    <div class="container">
+        <h1>🛠️ IndiVillage Converter Tool</h1>
+        <p class="subtitle">All-in-one converter for dates, text cases, and numbers</p>
+
         <div class="tab-nav">
-            <button class="tab-btn active" onclick="showTab('date')">📅 Date Converter</button>
-            <button class="tab-btn" onclick="showTab('calculator')">🧮 Number Calculator</button>
+            <button class="tab-btn active" onclick="showTab('date')">📅 Date</button>
+            <button class="tab-btn" onclick="showTab('textcase')">🔤 Text Case</button>
+            <button class="tab-btn" onclick="showTab('calculator')">🧮 Calculator</button>
         </div>
 
-        <!-- Date Converter Tab -->
         <div id="dateTab" class="tab-content">
             <div class="example">
                 <strong>Examples:</strong><br>
                 • "6/13/2025" → "2025-06-13T00:00:00"<br>
                 • "Aug 05, 2025" → "2025-08-05T00:00:00"<br>
-                • "Sep 05, 2025 2:15" → "2025-09-05T02:15:00"<br>
-                • "2025-07-07 5:30" → "2025-07-07T05:30:00"<br>
+                • "11 juin 2025" → "2025-06-11T00:00:00"<br>
                 • "2025-07-07 t5:30" → "2025-07-07T05:30:00"
             </div>
 
             <div class="input-group">
-                <label for="dateInput">Enter Date (Multiple formats supported):</label>
-                <input type="text" id="dateInput" placeholder="e.g., 6/13/2025 or Aug 05, 2025 or 2025-07-07 5:30" autocomplete="off">
+                <label for="dateInput">Enter Date (Multiple formats & languages):</label>
+                <input type="text" id="dateInput" placeholder="e.g., 6/13/2025, Aug 05 2025, 11 juin 2025">
             </div>
 
-            <button class="convert-btn" onclick="convertDate()">Convert Date</button>
+            <button class="action-btn" onclick="convertDate()">Convert Date</button>
 
             <div class="result" id="dateResult">
                 <span style="color: #999;">Converted date will appear here</span>
             </div>
 
             <div class="format-info">
-                <strong>Supported Input Formats:</strong><br>
-                • MM/DD/YYYY (e.g., 6/13/2025)<br>
-                • Month DD, YYYY (e.g., Aug 05, 2025)<br>
-                • Month DD, YYYY H:MM (e.g., Sep 05, 2025 2:15)<br>
-                • YYYY-MM-DD H:MM (e.g., 2025-07-07 5:30)<br>
-                • YYYY-MM-DD tH:MM (e.g., 2025-07-07 t5:30)<br>
-                <strong>Output Format:</strong> YYYY-MM-DDTHH:MM:SS (ISO 8601 format)
+                <strong>Supported Formats:</strong> MM/DD/YYYY, Month DD YYYY, DD Month YYYY, YYYY-MM-DD H:MM<br>
+                <strong>Languages:</strong> English, French, Spanish, German, Italian, Portuguese<br>
+                <strong>Output:</strong> YYYY-MM-DDTHH:MM:SS
             </div>
         </div>
 
-        <!-- Calculator Tab -->
+        <div id="textcaseTab" class="tab-content" style="display: none;">
+            <div class="example">
+                <strong>Transform your text into any case style!</strong>
+            </div>
+
+            <div class="input-group">
+                <label for="textInput">Enter Your Text:</label>
+                <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
+            </div>
+
+            <div class="case-buttons">
+                <button class="case-btn" onclick="convertCase('sentence')">Sentence case</button>
+                <button class="case-btn" onclick="convertCase('lower')">lower case</button>
+                <button class="case-btn" onclick="convertCase('upper')">UPPER CASE</button>
+                <button class="case-btn" onclick="convertCase('capital')">Capitalized Case</button>
+                <button class="case-btn" onclick="convertCase('alternate')">aLtErNaTiNg cAsE</button>
+                <button class="case-btn" onclick="convertCase('title')">Title Case</button>
+                <button class="case-btn" onclick="convertCase('inverse')">InVeRsE CaSe</button>
+                <button class="case-btn clear" onclick="clearText()">Clear</button>
+            </div>
+
+            <div class="button-group">
+                <button class="action-btn success" onclick="copyText()">📋 Copy</button>
+                <button class="action-btn secondary" onclick="downloadText()">💾 Download</button>
+            </div>
+
+            <div class="result" id="textResult">
+                <span style="color: #999;">Converted text will appear here</span>
+            </div>
+
+            <div class="format-info">
+                <strong>Available Conversions:</strong> Sentence case, lower case, UPPER CASE, Capitalized, aLtErNaTiNg, Title Case, InVeRsE CaSe
+            </div>
+        </div>
+
         <div id="calculatorTab" class="tab-content" style="display: none;">
             <div class="example">
                 <strong>Examples:</strong><br>
                 • "$234,80 + 100" → "334.80"<br>
-                • "234.50 * 2" → "469.00"<br>
-                • "345 - 45.25" → "299.75"
+                • "234.50 * 2" → "469.00"
             </div>
 
             <div class="input-group">
                 <label for="calcInput">Enter Numbers and Operation:</label>
-                <input type="text" id="calcInput" placeholder="e.g., $234,80 + 100 or 234.50 * 2" autocomplete="off">
+                <input type="text" id="calcInput" placeholder="e.g., $234,80 + 100">
             </div>
 
             <div class="calc-buttons">
@@ -313,69 +391,74 @@
                 <button class="calc-btn clear" onclick="clearCalc()">Clear</button>
             </div>
 
-            <button class="convert-btn" onclick="calculateNumbers()">Calculate</button>
+            <button class="action-btn" onclick="calculateNumbers()">Calculate</button>
 
             <div class="result" id="calcResult">
-                <span style="color: #999;">Calculation result will appear here</span>
+                <span style="color: #999;">Result will appear here</span>
             </div>
 
             <div class="format-info">
-                <strong>Supported Number Formats:</strong><br>
-                • Regular numbers (e.g., 234, 45.67)<br>
-                • Currency with $ (e.g., $234.50, $1,234.80)<br>
-                • European format with comma as decimal (e.g., 234,80)<br>
-                • Numbers with thousand separators (e.g., 1,234.50)<br>
-                <strong>Operations:</strong> + (add), - (subtract), * (multiply), / (divide)
+                <strong>Formats:</strong> Regular numbers, $currency, European (234,80), Thousand separators
             </div>
         </div>
     </div>
 
     <script>
-        // Tab switching functionality
+        const monthNames = {
+            'jan': 1, 'january': 1, 'feb': 2, 'february': 2, 'mar': 3, 'march': 3,
+            'apr': 4, 'april': 4, 'may': 5, 'jun': 6, 'june': 6, 'jul': 7, 'july': 7,
+            'aug': 8, 'august': 8, 'sep': 9, 'september': 9, 'oct': 10, 'october': 10,
+            'nov': 11, 'november': 11, 'dec': 12, 'december': 12,
+            'janvier': 1, 'février': 2, 'fevrier': 2, 'mars': 3, 'avril': 4, 'mai': 5,
+            'juin': 6, 'juillet': 7, 'août': 8, 'aout': 8, 'septembre': 9,
+            'octobre': 10, 'novembre': 11, 'décembre': 12, 'decembre': 12,
+            'enero': 1, 'febrero': 2, 'marzo': 3, 'abril': 4, 'mayo': 5, 'junio': 6,
+            'julio': 7, 'agosto': 8, 'septiembre': 9, 'octubre': 10, 'noviembre': 11, 'diciembre': 12,
+            'januar': 1, 'februar': 2, 'märz': 3, 'marz': 3, 'juni': 6, 'juli': 7, 'dezember': 12,
+            'gennaio': 1, 'febbraio': 2, 'aprile': 4, 'maggio': 5, 'giugno': 6,
+            'luglio': 7, 'settembre': 9, 'ottobre': 10, 'dicembre': 12,
+            'fevereiro': 2, 'março': 3, 'marco': 3, 'junho': 6, 'julho': 7, 'dezembro': 12
+        };
+
         function showTab(tabName) {
-            // Hide all tab contents
             document.getElementById('dateTab').style.display = 'none';
+            document.getElementById('textcaseTab').style.display = 'none';
             document.getElementById('calculatorTab').style.display = 'none';
             
-            // Remove active class from all tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             
-            // Show selected tab and mark button as active
             if (tabName === 'date') {
                 document.getElementById('dateTab').style.display = 'block';
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            } else if (tabName === 'textcase') {
+                document.getElementById('textcaseTab').style.display = 'block';
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
             } else {
                 document.getElementById('calculatorTab').style.display = 'block';
-                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.querySelectorAll('.tab-btn')[2].classList.add('active');
             }
         }
 
-        // Date conversion functions
         function convertDate() {
             const input = document.getElementById('dateInput').value.trim();
-            
             if (!input) {
                 showError('Please enter a date', 'dateResult');
                 return;
             }
 
             let result;
-            
-            // Try MM/DD/YYYY format first
             const mmddyyyyPattern = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
             const mmddyyyyMatch = input.match(mmddyyyyPattern);
             
             if (mmddyyyyMatch) {
                 result = parseMMDDYYYY(mmddyyyyMatch);
             } else {
-                // Try YYYY-MM-DD format with optional time
                 const yyyymmddPattern = /^(\d{4})-(\d{1,2})-(\d{1,2})(?:\s+t?(\d{1,2}):(\d{2}))?$/i;
                 const yyyymmddMatch = input.match(yyyymmddPattern);
                 
                 if (yyyymmddMatch) {
                     result = parseYYYYMMDD(yyyymmddMatch);
                 } else {
-                    // Try Month DD, YYYY format with optional time
                     result = parseMonthFormat(input);
                 }
             }
@@ -383,7 +466,7 @@
             if (result.error) {
                 showError(result.error, 'dateResult');
             } else {
-                showResult(result.formatted, 'dateResult');
+                showResult(result.formatted, 'dateResult', true);
             }
         }
 
@@ -392,29 +475,15 @@
             const day = parseInt(match[2]);
             const year = parseInt(match[3]);
 
-            // Validate date components
-            if (month < 1 || month > 12) {
-                return { error: 'Month must be between 1 and 12' };
-            }
+            if (month < 1 || month > 12) return { error: 'Invalid month' };
+            if (day < 1 || day > 31) return { error: 'Invalid day' };
 
-            if (day < 1 || day > 31) {
-                return { error: 'Day must be between 1 and 31' };
-            }
-
-            // Create date object to validate the date
             const date = new Date(year, month - 1, day);
-            
-            if (date.getFullYear() !== year || 
-                date.getMonth() !== month - 1 || 
-                date.getDate() !== day) {
-                return { error: 'Invalid date. Please check the day and month values.' };
+            if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+                return { error: 'Invalid date' };
             }
 
-            // Format the output as YYYY-MM-DDTHH:MM:SS
-            const formattedMonth = month.toString().padStart(2, '0');
-            const formattedDay = day.toString().padStart(2, '0');
-            const formatted = `${year}-${formattedMonth}-${formattedDay}T00:00:00`;
-
+            const formatted = year + '-' + month.toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0') + 'T00:00:00';
             return { formatted };
         }
 
@@ -425,125 +494,141 @@
             const hour = match[4] ? parseInt(match[4]) : 0;
             const minute = match[5] ? parseInt(match[5]) : 0;
 
-            // Validate date components
-            if (month < 1 || month > 12) {
-                return { error: 'Month must be between 1 and 12' };
-            }
+            if (month < 1 || month > 12) return { error: 'Invalid month' };
+            if (day < 1 || day > 31) return { error: 'Invalid day' };
+            if (hour < 0 || hour > 23) return { error: 'Invalid hour' };
+            if (minute < 0 || minute > 59) return { error: 'Invalid minute' };
 
-            if (day < 1 || day > 31) {
-                return { error: 'Day must be between 1 and 31' };
-            }
-
-            if (hour < 0 || hour > 23) {
-                return { error: 'Hour must be between 0 and 23' };
-            }
-
-            if (minute < 0 || minute > 59) {
-                return { error: 'Minute must be between 0 and 59' };
-            }
-
-            // Create date object to validate the date
-            const date = new Date(year, month - 1, day, hour, minute);
-            
-            if (date.getFullYear() !== year || 
-                date.getMonth() !== month - 1 || 
-                date.getDate() !== day ||
-                date.getHours() !== hour ||
-                date.getMinutes() !== minute) {
-                return { error: 'Invalid date. Please check the date and time values.' };
-            }
-
-            // Format the output as YYYY-MM-DDTHH:MM:SS
-            const formattedMonth = month.toString().padStart(2, '0');
-            const formattedDay = day.toString().padStart(2, '0');
-            const formattedHour = hour.toString().padStart(2, '0');
-            const formattedMinute = minute.toString().padStart(2, '0');
-            const formatted = `${year}-${formattedMonth}-${formattedDay}T${formattedHour}:${formattedMinute}:00`;
-
+            const formatted = year + '-' + month.toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0') + 'T' + hour.toString().padStart(2, '0') + ':' + minute.toString().padStart(2, '0') + ':00';
             return { formatted };
         }
 
         function parseMonthFormat(input) {
-            const monthNames = {
-                'jan': 1, 'january': 1,
-                'feb': 2, 'february': 2,
-                'mar': 3, 'march': 3,
-                'apr': 4, 'april': 4,
-                'may': 5,
-                'jun': 6, 'june': 6,
-                'jul': 7, 'july': 7,
-                'aug': 8, 'august': 8,
-                'sep': 9, 'september': 9,
-                'oct': 10, 'october': 10,
-                'nov': 11, 'november': 11,
-                'dec': 12, 'december': 12
-            };
+            const patterns = [
+                /^([a-zA-Zéèâûç]+)\s+(\d{1,2}),?\s+(\d{4})(?:\s+(\d{1,2}):(\d{2}))?$/i,
+                /^(\d{1,2})\s+([a-zA-Zéèâûç]+),?\s+(\d{4})(?:\s+(\d{1,2}):(\d{2}))?$/i
+            ];
 
-            // Pattern for Month DD, YYYY with optional time (H:MM or HH:MM)
-            const monthPattern = /^([a-zA-Z]+)\s+(\d{1,2}),?\s+(\d{4})(?:\s+(\d{1,2}):(\d{2}))?$/i;
-            const match = input.match(monthPattern);
+            for (let i = 0; i < patterns.length; i++) {
+                const match = input.match(patterns[i]);
+                if (match) {
+                    let monthName, day, year, hour, minute;
+                    
+                    if (i === 0) {
+                        monthName = match[1].toLowerCase();
+                        day = parseInt(match[2]);
+                        year = parseInt(match[3]);
+                        hour = match[4] ? parseInt(match[4]) : 0;
+                        minute = match[5] ? parseInt(match[5]) : 0;
+                    } else {
+                        day = parseInt(match[1]);
+                        monthName = match[2].toLowerCase();
+                        year = parseInt(match[3]);
+                        hour = match[4] ? parseInt(match[4]) : 0;
+                        minute = match[5] ? parseInt(match[5]) : 0;
+                    }
+
+                    const month = monthNames[monthName];
+                    if (!month) {
+                        return { error: 'Invalid month name' };
+                    }
+
+                    if (day < 1 || day > 31) return { error: 'Invalid day' };
+
+                    const formatted = year + '-' + month.toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0') + 'T' + hour.toString().padStart(2, '0') + ':' + minute.toString().padStart(2, '0') + ':00';
+                    return { formatted };
+                }
+            }
             
-            if (!match) {
-                return { error: 'Invalid format. Supported formats: MM/DD/YYYY, Month DD, YYYY H:MM, or YYYY-MM-DD H:MM' };
-            }
-
-            const monthName = match[1].toLowerCase();
-            const day = parseInt(match[2]);
-            const year = parseInt(match[3]);
-            const hour = match[4] ? parseInt(match[4]) : 0;
-            const minute = match[5] ? parseInt(match[5]) : 0;
-
-            // Validate month name
-            const month = monthNames[monthName];
-            if (!month) {
-                return { error: 'Invalid month name. Use full month names or abbreviations (e.g., Aug, August)' };
-            }
-
-            // Validate day
-            if (day < 1 || day > 31) {
-                return { error: 'Day must be between 1 and 31' };
-            }
-
-            // Validate hour and minute if provided
-            if (hour < 0 || hour > 23) {
-                return { error: 'Hour must be between 0 and 23' };
-            }
-
-            if (minute < 0 || minute > 59) {
-                return { error: 'Minute must be between 0 and 59' };
-            }
-
-            // Create date object to validate the date
-            const date = new Date(year, month - 1, day, hour, minute);
-            
-            if (date.getFullYear() !== year || 
-                date.getMonth() !== month - 1 || 
-                date.getDate() !== day ||
-                date.getHours() !== hour ||
-                date.getMinutes() !== minute) {
-                return { error: 'Invalid date. Please check the day, month, and time values.' };
-            }
-
-            // Format the output as YYYY-MM-DDTHH:MM:SS
-            const formattedMonth = month.toString().padStart(2, '0');
-            const formattedDay = day.toString().padStart(2, '0');
-            const formattedHour = hour.toString().padStart(2, '0');
-            const formattedMinute = minute.toString().padStart(2, '0');
-            const formatted = `${year}-${formattedMonth}-${formattedDay}T${formattedHour}:${formattedMinute}:00`;
-
-            return { formatted };
+            return { error: 'Invalid format' };
         }
 
-        // Calculator functionality
+        function convertCase(caseType) {
+            const input = document.getElementById('textInput').value;
+            if (!input) {
+                showError('Please enter text', 'textResult');
+                return;
+            }
+
+            let result;
+            switch(caseType) {
+                case 'sentence':
+                    result = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+                    break;
+                case 'lower':
+                    result = input.toLowerCase();
+                    break;
+                case 'upper':
+                    result = input.toUpperCase();
+                    break;
+                case 'capital':
+                    result = input.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+                    break;
+                case 'alternate':
+                    result = input.split('').map((char, i) => i % 2 === 0 ? char.toLowerCase() : char.toUpperCase()).join('');
+                    break;
+                case 'title':
+                    const minorWords = ['a', 'an', 'the', 'and', 'but', 'or', 'for', 'nor', 'on', 'at', 'to', 'from', 'by', 'in', 'of'];
+                    result = input.toLowerCase().split(' ').map((word, index) => {
+                        if (index === 0 || !minorWords.includes(word)) {
+                            return word.charAt(0).toUpperCase() + word.slice(1);
+                        }
+                        return word;
+                    }).join(' ');
+                    break;
+                case 'inverse':
+                    result = input.split('').map(char => {
+                        return char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase();
+                    }).join('');
+                    break;
+            }
+
+            document.getElementById('textInput').value = result;
+            showResult(result, 'textResult', false);
+        }
+
+        function clearText() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('textResult').innerHTML = '<span style="color: #999;">Converted text will appear here</span>';
+            document.getElementById('textResult').className = 'result';
+        }
+
+        function copyText() {
+            const text = document.getElementById('textInput').value;
+            if (!text) {
+                showError('No text to copy', 'textResult');
+                return;
+            }
+            copyToClipboard(text);
+        }
+
+        function downloadText() {
+            const text = document.getElementById('textInput').value;
+            if (!text) {
+                showError('No text to download', 'textResult');
+                return;
+            }
+            
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'converted-text.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            showResult('Downloaded!', 'textResult', false);
+        }
+
         function addToCalc(operator) {
-            const calcInput = document.getElementById('calcInput');
-            calcInput.value += operator;
-            calcInput.focus();
+            document.getElementById('calcInput').value += operator;
         }
 
         function clearCalc() {
             document.getElementById('calcInput').value = '';
-            document.getElementById('calcResult').innerHTML = '<span style="color: #999;">Calculation result will appear here</span>';
+            document.getElementById('calcResult').innerHTML = '<span style="color: #999;">Result will appear here</span>';
             document.getElementById('calcResult').className = 'result';
         }
 
@@ -556,104 +641,74 @@
             }
 
             try {
-                // Clean and parse the input
                 let cleanInput = input
-                    .replace(/\$/g, '') // Remove dollar signs
-                    .replace(/×/g, '*') // Replace × with *
-                    .replace(/÷/g, '/') // Replace ÷ with /
-                    .replace(/,(\d{2})(?!\d)/g, '.$1') // Convert European decimal comma to dot (234,80 -> 234.80)
-                    .replace(/,(?=\d{3})/g, ''); // Remove thousand separators (1,234 -> 1234)
+                    .replace(/\$/g, '')
+                    .replace(/×/g, '*')
+                    .replace(/÷/g, '/')
+                    .replace(/,(\d{2})(?!\d)/g, '.$1')
+                    .replace(/,(?=\d{3})/g, '');
 
-                // Validate that the expression contains only numbers and operators
                 if (!/^[\d\s+\-*/().]+$/.test(cleanInput)) {
-                    throw new Error('Invalid characters in calculation');
+                    throw new Error('Invalid');
                 }
 
-                // Evaluate the expression safely
                 const result = Function('"use strict"; return (' + cleanInput + ')')();
                 
                 if (isNaN(result) || !isFinite(result)) {
-                    throw new Error('Invalid calculation result');
+                    throw new Error('Invalid');
                 }
 
-                // Format the result to 2 decimal places
                 const formattedResult = parseFloat(result).toFixed(2);
-                showResult(formattedResult, 'calcResult');
+                showResult(formattedResult, 'calcResult', true);
 
             } catch (error) {
-                showError('Invalid calculation. Please check your input.', 'calcResult');
+                showError('Invalid calculation', 'calcResult');
             }
         }
 
-        // Utility functions
-        function showResult(result, elementId) {
+        function showResult(result, elementId, showCopy) {
             const resultDiv = document.getElementById(elementId);
             resultDiv.className = 'result';
-            resultDiv.innerHTML = `
-                <span class="result-text">${result}</span>
-                <button class="copy-btn" onclick="copyToClipboard('${result}')">Copy</button>
-            `;
+            if (showCopy) {
+                resultDiv.innerHTML = '<span class="result-text">' + result + '</span><button class="copy-btn" onclick="copyResultText(\'' + result + '\')">Copy</button>';
+            } else {
+                resultDiv.innerHTML = '<span class="result-text">' + result + '</span>';
+            }
         }
 
         function showError(message, elementId) {
             const resultDiv = document.getElementById(elementId);
             resultDiv.className = 'result error';
-            resultDiv.innerHTML = `<span class="result-text">${message}</span>`;
+            resultDiv.innerHTML = '<span class="result-text">' + message + '</span>';
+        }
+
+        function copyResultText(text) {
+            copyToClipboard(text);
         }
 
         function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                const copyBtn = event.target;
-                const originalText = copyBtn.textContent;
-                copyBtn.textContent = 'Copied!';
-                copyBtn.style.background = '#20c997';
-                
-                setTimeout(() => {
-                    copyBtn.textContent = originalText;
-                    copyBtn.style.background = '#28a745';
-                }, 2000);
-            }).catch(() => {
-                // Fallback for older browsers
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Copied to clipboard!');
+                });
+            } else {
                 const textArea = document.createElement('textarea');
                 textArea.value = text;
                 document.body.appendChild(textArea);
                 textArea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textArea);
-                
-                const copyBtn = event.target;
-                const originalText = copyBtn.textContent;
-                copyBtn.textContent = 'Copied!';
-                setTimeout(() => {
-                    copyBtn.textContent = originalText;
-                }, 2000);
-            });
+                alert('Copied to clipboard!');
+            }
         }
 
-        // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
-            // Allow Enter key to trigger conversion for both tabs
             document.getElementById('dateInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    convertDate();
-                }
+                if (e.key === 'Enter') convertDate();
             });
 
             document.getElementById('calcInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    calculateNumbers();
-                }
-            });
-
-            // Auto-convert as user types (with debounce) for date input
-            let dateTimeout;
-            document.getElementById('dateInput').addEventListener('input', function() {
-                clearTimeout(dateTimeout);
-                dateTimeout = setTimeout(() => {
-                    if (this.value.trim()) {
-                        convertDate();
-                    }
-                }, 1000);
+                if (e.key === 'Enter') calculateNumbers();
             });
         });
     </script>

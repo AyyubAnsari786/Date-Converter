@@ -41,6 +41,8 @@
             max-width: 700px;
             margin: 0 auto;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
@@ -272,6 +274,33 @@
             margin-top: 15px;
         }
 
+        /* Toast Notification Styles */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: #dc3545;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 25px 20px;
@@ -289,10 +318,23 @@
             .calc-buttons, .case-buttons {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .toast {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                transform: translateY(-100px);
+            }
+
+            .toast.show {
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
+    <div class="toast" id="toast"></div>
+
     <div class="logo-container">
         <svg width="200" height="60" xmlns="http://www.w3.org/2000/svg">
             <text x="10" y="45" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#000">indivillage</text>
@@ -358,7 +400,7 @@
             </div>
 
             <div class="button-group">
-                <button class="action-btn success" onclick="copyText()">📋 Copy</button>
+                <button class="action-btn success copy-btn" onclick="copyText()">📋 Copy</button>
                 <button class="action-btn secondary" onclick="downloadText()">💾 Download</button>
             </div>
 
@@ -391,7 +433,7 @@
                 <button class="calc-btn clear" onclick="clearCalc()">Clear</button>
             </div>
 
-            <button class="action-btn" onclick="calculateNumbers()">Calculate</button>
+            <button class="action-btn" onclick="calculateNumbers(false)">Calculate</button>
 
             <div class="result" id="calcResult">
                 <span style="color: #999;">Result will appear here</span>
@@ -632,11 +674,13 @@
             document.getElementById('calcResult').className = 'result';
         }
 
-        function calculateNumbers() {
+        function calculateNumbers(dynamic = false) {
             const input = document.getElementById('calcInput').value.trim();
+            const resultDiv = document.getElementById('calcResult');
             
             if (!input) {
-                showError('Please enter a calculation', 'calcResult');
+                resultDiv.innerHTML = '<span style="color: #999;">Result will appear here</span>';
+                resultDiv.className = 'result';
                 return;
             }
 
@@ -662,7 +706,14 @@
                 showResult(formattedResult, 'calcResult', true);
 
             } catch (error) {
-                showError('Invalid calculation', 'calcResult');
+                if (dynamic) {
+                    // For dynamic input, reset to default without showing error
+                    resultDiv.innerHTML = '<span style="color: #999;">Result will appear here</span>';
+                    resultDiv.className = 'result';
+                } else {
+                    // For button/Enter, show error
+                    showError('Invalid calculation', 'calcResult');
+                }
             }
         }
 
@@ -689,17 +740,29 @@
         function copyToClipboard(text) {
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(text).then(() => {
-                    alert('Copied to clipboard!');
+                    showToast('Copied to clipboard!');
+                }).catch(() => {
+                    showToast('Failed to copy', true);
                 });
             } else {
                 const textArea = document.createElement('textarea');
                 textArea.value = text;
                 document.body.appendChild(textArea);
                 textArea.select();
-                document.execCommand('copy');
+                const success = document.execCommand('copy');
                 document.body.removeChild(textArea);
-                alert('Copied to clipboard!');
+                showToast(success ? 'Copied to clipboard!' : 'Failed to copy', !success);
             }
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = isError ? 'toast error' : 'toast';
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -707,8 +770,12 @@
                 if (e.key === 'Enter') convertDate();
             });
 
-            document.getElementById('calcInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') calculateNumbers();
+            const calcInput = document.getElementById('calcInput');
+            calcInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') calculateNumbers(false);
+            });
+            calcInput.addEventListener('input', function() {
+                calculateNumbers(true);
             });
         });
     </script>

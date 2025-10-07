@@ -12,83 +12,100 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
             min-height: 100vh;
             padding: 20px;
-        }
-
-        .logo-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .logo-container img {
-            max-width: 200px;
-            height: auto;
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
             padding: 40px;
             max-width: 700px;
-            margin: 0 auto;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header {
             text-align: center;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 32px;
+        }
+
+        .logo {
+            display: inline-block;
+            background: white;
+            padding: 16px 28px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            display: block;
         }
 
         h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 2em;
-            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 8px;
+            font-size: 1.75em;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1em;
+            color: #718096;
+            font-size: 0.95em;
             line-height: 1.5;
         }
 
         .tab-nav {
             display: flex;
-            margin-bottom: 30px;
-            background: #f0f0f0;
-            border-radius: 10px;
+            margin-bottom: 28px;
+            background: #f7fafc;
+            border-radius: 12px;
             padding: 5px;
             gap: 5px;
+            border: 1px solid #e2e8f0;
         }
 
         .tab-btn {
             flex: 1;
             background: transparent;
             border: none;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 12px 16px;
+            border-radius: 10px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            color: #666;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(102, 126, 234, 0.08);
+            color: #667eea;
         }
 
         .tab-btn.active {
             background: white;
             color: #667eea;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .tab-content {
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @keyframes fadeIn {
@@ -96,39 +113,63 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        .info-banner {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+            border: 1px solid #d4e2ff;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .info-banner strong {
+            color: #2d3748;
+            display: block;
+            margin-bottom: 4px;
+        }
+
         .input-group {
             margin-bottom: 20px;
-            text-align: left;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
-            color: #555;
-            font-weight: 500;
-            font-size: 14px;
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.2px;
         }
 
         input[type="text"], textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
+            padding: 12px 14px;
+            border: 2px solid #e2e8f0;
             border-radius: 10px;
-            font-size: 15px;
+            font-size: 14px;
             transition: all 0.3s ease;
             background: white;
             font-family: inherit;
+            color: #2d3748;
         }
 
         textarea {
             min-height: 100px;
             resize: vertical;
+            line-height: 1.6;
         }
 
         input[type="text"]:focus, textarea:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+
+        input[type="text"]::placeholder, textarea::placeholder {
+            color: #a0aec0;
         }
 
         .action-btn {
@@ -136,160 +177,155 @@
             color: white;
             border: none;
             padding: 12px 24px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 5px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            letter-spacing: 0.3px;
+            width: 100%;
         }
 
         .action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .action-btn.secondary {
-            background: #6c757d;
-        }
-
-        .action-btn.success {
-            background: #28a745;
+        .action-btn:active {
+            transform: translateY(0);
         }
 
         .calc-buttons, .case-buttons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 8px;
             margin-bottom: 20px;
         }
 
         .calc-btn, .case-btn {
-            background: #f8f9ff;
-            border: 2px solid #e8ecff;
-            padding: 10px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 10px 12px;
             border-radius: 8px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            color: #667eea;
+            color: #4a5568;
         }
 
         .calc-btn:hover, .case-btn:hover {
             background: #667eea;
             color: white;
+            border-color: #667eea;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
         .calc-btn.clear, .case-btn.clear {
-            background: #fee;
-            border-color: #fcc;
-            color: #e74c3c;
+            background: #fff5f5;
+            border-color: #fed7d7;
+            color: #e53e3e;
         }
 
         .calc-btn.clear:hover, .case-btn.clear:hover {
-            background: #e74c3c;
+            background: #e53e3e;
             color: white;
+            border-color: #e53e3e;
         }
 
         .result {
             margin-top: 20px;
-            padding: 15px;
-            background: #f8f9ff;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
             border-radius: 10px;
-            border: 2px solid #e8ecff;
+            border: 2px solid #e2e8f0;
             min-height: 50px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
+            justify-content: space-between;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .result-text {
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 15px;
             font-weight: 600;
-            color: #333;
+            color: #2d3748;
             word-break: break-all;
             flex: 1;
+            letter-spacing: 0.2px;
         }
 
         .error {
-            color: #e74c3c;
-            background: #fdf2f2;
-            border-color: #fecaca;
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-color: #fc8181;
+        }
+
+        .error .result-text {
+            color: #c53030;
         }
 
         .copy-btn, .download-btn {
-            background: #28a745;
+            background: #48bb78;
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 5px;
-            font-size: 13px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 8px rgba(72, 187, 120, 0.3);
         }
 
         .copy-btn:hover {
-            background: #218838;
+            background: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
         }
 
         .download-btn {
-            background: #17a2b8;
+            background: #4299e1;
+            box-shadow: 0 2px 8px rgba(66, 153, 225, 0.3);
         }
 
         .download-btn:hover {
-            background: #138496;
-        }
-
-        .example {
-            background: #e8f4fd;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 13px;
-            color: #0066cc;
-            text-align: left;
-        }
-
-        .format-info {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 15px;
-            font-size: 13px;
-            color: #856404;
-            text-align: left;
+            background: #3182ce;
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
         }
 
         .button-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 16px;
         }
 
-        /* Toast Notification Styles */
         .toast {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #28a745;
+            top: 24px;
+            right: 24px;
+            background: #48bb78;
             color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 14px 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             z-index: 1000;
             transform: translateX(400px);
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .toast.show {
@@ -298,12 +334,28 @@
         }
 
         .toast.error {
-            background: #dc3545;
+            background: #f56565;
+        }
+
+        .toast::before {
+            content: '✓';
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .toast.error::before {
+            content: '✕';
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 16px;
+                align-items: flex-start;
+            }
+
             .container {
-                padding: 25px 20px;
+                padding: 28px 20px;
+                border-radius: 20px;
             }
             
             h1 {
@@ -311,8 +363,9 @@
             }
 
             .tab-btn {
-                font-size: 11px;
-                padding: 8px;
+                font-size: 12px;
+                padding: 10px 8px;
+                gap: 4px;
             }
 
             .calc-buttons, .case-buttons {
@@ -320,9 +373,9 @@
             }
 
             .toast {
-                top: 10px;
-                right: 10px;
-                left: 10px;
+                top: 16px;
+                right: 16px;
+                left: 16px;
                 transform: translateY(-100px);
             }
 
@@ -330,61 +383,75 @@
                 transform: translateY(0);
             }
         }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 20px;
+            }
+
+            h1 {
+                font-size: 1.35em;
+            }
+
+            .subtitle {
+                font-size: 0.9em;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="toast" id="toast"></div>
 
-    <div class="logo-container">
-        <svg width="200" height="60" xmlns="http://www.w3.org/2000/svg">
-            <text x="10" y="45" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#000">indivillage</text>
-        </svg>
-    </div>
-
     <div class="container">
-        <h1>🛠️ IndiVillage Converter Tool</h1>
-        <p class="subtitle">All-in-one converter for dates, text cases, and numbers</p>
+        <div class="header">
+            <div class="logo">
+                <img src="logo.png" alt="IndiVillage Logo">
+            </div>
+            <h1>Professional Converter Tool</h1>
+            <p class="subtitle">Transform dates, text cases, and perform calculations with enterprise-grade precision</p>
+        </div>
 
         <div class="tab-nav">
-            <button class="tab-btn active" onclick="showTab('date')">📅 Date</button>
-            <button class="tab-btn" onclick="showTab('textcase')">🔤 Text Case</button>
-            <button class="tab-btn" onclick="showTab('calculator')">🧮 Calculator</button>
+            <button class="tab-btn active" onclick="showTab('date')">
+                <span>📅</span>
+                <span>Date</span>
+            </button>
+            <button class="tab-btn" onclick="showTab('textcase')">
+                <span>🔤</span>
+                <span>Text Case</span>
+            </button>
+            <button class="tab-btn" onclick="showTab('calculator')">
+                <span>🧮</span>
+                <span>Calculator</span>
+            </button>
         </div>
 
         <div id="dateTab" class="tab-content">
-            <div class="example">
-                <strong>Examples:</strong><br>
-                • "6/13/2025" → "2025-06-13T00:00:00"<br>
-                • "Aug 05, 2025" → "2025-08-05T00:00:00"<br>
-                • "11 juin 2025" → "2025-06-11T00:00:00"<br>
-                • "2025-07-07 t5:30" → "2025-07-07T05:30:00"
+            <div class="info-banner">
+                <strong>Examples:</strong>
+                6/13/2025 • Aug 05, 2025 • 11 juin 2025 • 2025-07-07 t5:30
             </div>
 
             <div class="input-group">
-                <label for="dateInput">Enter Date (Multiple formats & languages):</label>
+                <label for="dateInput">Enter Date (Multiple formats & languages)</label>
                 <input type="text" id="dateInput" placeholder="e.g., 6/13/2025, Aug 05 2025, 11 juin 2025">
             </div>
 
             <button class="action-btn" onclick="convertDate()">Convert Date</button>
 
             <div class="result" id="dateResult">
-                <span style="color: #999;">Converted date will appear here</span>
-            </div>
-
-            <div class="format-info">
-                <strong>Supported Formats:</strong> MM/DD/YYYY, Month DD YYYY, DD Month YYYY, YYYY-MM-DD H:MM<br>
-                <strong>Languages:</strong> English, French, Spanish, German, Italian, Portuguese<br>
-                <strong>Output:</strong> YYYY-MM-DDTHH:MM:SS
+                <span class="result-text" style="color: #a0aec0;">Converted date will appear here</span>
             </div>
         </div>
 
         <div id="textcaseTab" class="tab-content" style="display: none;">
-            <div class="example">
-                <strong>Transform your text into any case style!</strong>
+            <div class="info-banner">
+                <strong>Transform Text:</strong>
+                Convert your text into any case style with professional formatting
             </div>
 
             <div class="input-group">
-                <label for="textInput">Enter Your Text:</label>
+                <label for="textInput">Enter Your Text</label>
                 <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
             </div>
 
@@ -393,54 +460,45 @@
                 <button class="case-btn" onclick="convertCase('lower')">lower case</button>
                 <button class="case-btn" onclick="convertCase('upper')">UPPER CASE</button>
                 <button class="case-btn" onclick="convertCase('capital')">Capitalized Case</button>
-                <button class="case-btn" onclick="convertCase('alternate')">aLtErNaTiNg cAsE</button>
-                <button class="case-btn" onclick="convertCase('title')">Title Case</button>
-                <button class="case-btn" onclick="convertCase('inverse')">InVeRsE CaSe</button>
+                <button class="case-btn" onclick="convertCase('title')">Title case</button>
+                <button class="case-btn" onclick="convertCase('alternate')">aLtErNaTe</button>
+                <button class="case-btn" onclick="convertCase('inverse')">InVeRsE Case</button>
                 <button class="case-btn clear" onclick="clearText()">Clear</button>
             </div>
 
             <div class="button-group">
-                <button class="action-btn success copy-btn" onclick="copyText()">📋 Copy</button>
-                <button class="action-btn secondary" onclick="downloadText()">💾 Download</button>
+                <button class="copy-btn" onclick="copyText()">📋 Copy</button>
+                <button class="download-btn" onclick="downloadText()">💾 Download</button>
             </div>
 
             <div class="result" id="textResult">
-                <span style="color: #999;">Converted text will appear here</span>
-            </div>
-
-            <div class="format-info">
-                <strong>Available Conversions:</strong> Sentence case, lower case, UPPER CASE, Capitalized, aLtErNaTiNg, Title Case, InVeRsE CaSe
+                <span class="result-text" style="color: #a0aec0;">Converted text will appear here</span>
             </div>
         </div>
 
         <div id="calculatorTab" class="tab-content" style="display: none;">
-            <div class="example">
-                <strong>Examples:</strong><br>
-                • "$234,80 + 100" → "334.80"<br>
-                • "234.50 * 2" → "469.00"
+            <div class="info-banner">
+                <strong>Examples:</strong>
+                $234,80 + 100 → 334.80 • 234.50 * 2 → 469.00 • 1,500 / 3 → 500.00
             </div>
 
             <div class="input-group">
-                <label for="calcInput">Enter Numbers and Operation:</label>
+                <label for="calcInput">Enter Expression</label>
                 <input type="text" id="calcInput" placeholder="e.g., $234,80 + 100">
             </div>
 
             <div class="calc-buttons">
-                <button class="calc-btn" onclick="addToCalc(' + ')">+</button>
-                <button class="calc-btn" onclick="addToCalc(' - ')">-</button>
-                <button class="calc-btn" onclick="addToCalc(' * ')">×</button>
-                <button class="calc-btn" onclick="addToCalc(' / ')">÷</button>
+                <button class="calc-btn" onclick="addToCalc(' + ')"><strong>+</strong></button>
+                <button class="calc-btn" onclick="addToCalc(' - ')"><strong>−</strong></button>
+                <button class="calc-btn" onclick="addToCalc(' * ')"><strong>×</strong></button>
+                <button class="calc-btn" onclick="addToCalc(' / ')"><strong>÷</strong></button>
                 <button class="calc-btn clear" onclick="clearCalc()">Clear</button>
             </div>
 
-            <button class="action-btn" onclick="calculateNumbers(false)">Calculate</button>
+            <button class="action-btn" onclick="calculateNumbers(false)">Calculate Result</button>
 
             <div class="result" id="calcResult">
-                <span style="color: #999;">Result will appear here</span>
-            </div>
-
-            <div class="format-info">
-                <strong>Formats:</strong> Regular numbers, $currency, European (234,80), Thousand separators
+                <span class="result-text" style="color: #a0aec0;">Result will appear here</span>
             </div>
         </div>
     </div>
@@ -631,7 +689,7 @@
 
         function clearText() {
             document.getElementById('textInput').value = '';
-            document.getElementById('textResult').innerHTML = '<span style="color: #999;">Converted text will appear here</span>';
+            document.getElementById('textResult').innerHTML = '<span class="result-text" style="color: #a0aec0;">Converted text will appear here</span>';
             document.getElementById('textResult').className = 'result';
         }
 
@@ -661,7 +719,7 @@
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
             
-            showResult('Downloaded!', 'textResult', false);
+            showToast('File downloaded successfully!');
         }
 
         function addToCalc(operator) {
@@ -670,7 +728,7 @@
 
         function clearCalc() {
             document.getElementById('calcInput').value = '';
-            document.getElementById('calcResult').innerHTML = '<span style="color: #999;">Result will appear here</span>';
+            document.getElementById('calcResult').innerHTML = '<span class="result-text" style="color: #a0aec0;">Result will appear here</span>';
             document.getElementById('calcResult').className = 'result';
         }
 
@@ -679,7 +737,7 @@
             const resultDiv = document.getElementById('calcResult');
             
             if (!input) {
-                resultDiv.innerHTML = '<span style="color: #999;">Result will appear here</span>';
+                resultDiv.innerHTML = '<span class="result-text" style="color: #a0aec0;">Result will appear here</span>';
                 resultDiv.className = 'result';
                 return;
             }
@@ -707,11 +765,9 @@
 
             } catch (error) {
                 if (dynamic) {
-                    // For dynamic input, reset to default without showing error
-                    resultDiv.innerHTML = '<span style="color: #999;">Result will appear here</span>';
+                    resultDiv.innerHTML = '<span class="result-text" style="color: #a0aec0;">Result will appear here</span>';
                     resultDiv.className = 'result';
                 } else {
-                    // For button/Enter, show error
                     showError('Invalid calculation', 'calcResult');
                 }
             }
@@ -721,7 +777,7 @@
             const resultDiv = document.getElementById(elementId);
             resultDiv.className = 'result';
             if (showCopy) {
-                resultDiv.innerHTML = '<span class="result-text">' + result + '</span><button class="copy-btn" onclick="copyResultText(\'' + result + '\')">Copy</button>';
+                resultDiv.innerHTML = '<span class="result-text">' + result + '</span><button class="copy-btn" onclick="copyResultText(\'' + result + '\')">📋 Copy</button>';
             } else {
                 resultDiv.innerHTML = '<span class="result-text">' + result + '</span>';
             }
@@ -747,6 +803,8 @@
             } else {
                 const textArea = document.createElement('textarea');
                 textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
                 document.body.appendChild(textArea);
                 textArea.select();
                 const success = document.execCommand('copy');
@@ -759,10 +817,10 @@
             const toast = document.getElementById('toast');
             toast.textContent = message;
             toast.className = isError ? 'toast error' : 'toast';
-            toast.classList.add('show');
+            setTimeout(() => toast.classList.add('show'), 10);
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 2000);
+            }, 3000);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
